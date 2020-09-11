@@ -1,4 +1,4 @@
-﻿// ДЗ 1 - Буй Тхе Зунг - УТС12
+﻿// ДЗ 1 - Буй Тхе Зунг - УТС12-Вариант 8
 using System;
 
 namespace DZ1
@@ -31,8 +31,8 @@ namespace DZ1
         //                     This function will ask the user re-enter a right forms (numbers), also call function showText() to show command for user
         static double inputData(int PositionIndex)
         {
-            double Input; 
-            inputProcess:
+            double Input;
+        inputProcess:
             try
             {
                 Input = Convert.ToDouble(Console.ReadLine());
@@ -42,47 +42,47 @@ namespace DZ1
             {
                 Console.WriteLine("Sorry ! \n The Number Format Exception : {0}.\n Please enter a number\n", e.Message);
                 showText(PositionIndex);
-                goto inputProcess; 
+                goto inputProcess;
             }
         }
 
 
         /****************************************************************/
-        /* Functions countLength(), countCircumference(), countSquare() */
+        /*        Functions calLength(), calPerimeter(), calArea()            */
         /****************************************************************/
-        //<===>countLength() : This function will calculate and returrn the length of each side of the triangle according to its coordinates
-        static double countLength(double x1,double y1,double x2,double y2)
+        //<===>calLength() : This function will calculate and returrn the length of each side of the triangle according to its coordinates
+        static double calLength(double x1, double y1, double x2, double y2)
         {
             double L = Math.Sqrt(Math.Pow((x2 - x1), 2) + Math.Pow((y2 - y1), 2));
             return L;
         }
 
-        //<===>countCircumference() : This function will calculate the Circumference of the figure based on the return value(the length of sides) of the function countLength()
-        static double countCircumference(double[] x, double[] y)
+        //<===>calPerimeter() : This function will calculate the Perimeter of the figure based on the return value(the length of sides) of the function calLength()
+        static double calPerimeter(double[] x, double[] y)
         {
-            double L1,L2,L3;
-            double Circumference;
-            L1 = countLength(x[0], y[0], x[1], y[1]);
-            L2 = countLength(x[1], y[1], x[2], y[2]);
-            L3 = countLength(x[0], y[0], x[2], y[2]);
-            Circumference = L1 + L2 + L3;
+            double L1, L2, L3;
+            double Perimeter;
+            L1 = calLength(x[0], y[0], x[1], y[1]);
+            L2 = calLength(x[1], y[1], x[2], y[2]);
+            L3 = calLength(x[0], y[0], x[2], y[2]);
+            Perimeter = L1 + L2 + L3;
             //Clear the memories of 2 arrays 
             x = null;
             y = null;
             GC.Collect();
-            return Circumference;
+            return Perimeter;
 
         }
 
-        //<===>countSquare() : This function will calculate and return the Square of the figure based on Formula Heron and Values(the length of sides) return from function countLength()
-        static double countSquare(double[] x, double[] y)
+        //<===>calArea() : This function will calculate and return the Area of the figure based on Formular Heron and Values(the length of sides) return from function calLength()
+        static double calArea(double[] x, double[] y)
         {
-            double p,S;
-            p = countCircumference(x, y) / 2;
+            double p, S;
+            p = calPerimeter(x, y) / 2;
             double a, b, c; // a,b,c : lengths of 3 sides 
-            a = countLength(x[0], y[0], x[1], y[1]);
-            b = countLength(x[1], y[1], x[2], y[2]);
-            c = countLength(x[0], y[0], x[2], y[2]);
+            a = calLength(x[0], y[0], x[1], y[1]);
+            b = calLength(x[1], y[1], x[2], y[2]);
+            c = calLength(x[0], y[0], x[2], y[2]);
             S = Math.Sqrt(p * (p - a) * (p - b) * (p - c));
             //Clear the memories of 2 arrays 
             x = null;
@@ -97,18 +97,18 @@ namespace DZ1
         /************************************/
         //In Main Function
         //  +)Declare Arrays x[3] and y[3] for storing DATA of (x1,y1); (x2,y2); (x3,y3) Which were entered from User's Keyboard          
-        //  +)Declare Circumference, Square follow requierments
+        //  +)Declare Perimeter, Area follow requierments
         //  +)Call Functions showText() and inputData() to enter from keyboard
-        //  +)Call functions countCircumference() and countSquare() for take result after counting of these functions and show on screen
+        //  +)Call functions calPerimeter() and calArea() for take result after counting of these functions and show on screen
         //  +)Clear the memories of 2 arrays x[3] and y[3] before finishing of program
         //  +)Pause the Console app in 1 minute when user run in .exe file 
         static void Main(string[] args)
         {
-            Console.WriteLine("DZ 1 - Bui The Zung - UTS 12!\n");
+            Console.WriteLine("DZ 1 - Bui The Zung - UTS 12 - Question 8  ! \n");
             double[] x = new double[3];
             double[] y = new double[3];
-            double Circumference, Square;
-            for (int i=0;i<6;i++)
+            double Perimeter, Area;
+            for (int i = 0; i < 6; i++)
             {
                 showText(i);
                 if (i % 2 == 0)
@@ -124,11 +124,11 @@ namespace DZ1
                 //Process storing: x[0] -> y[0] -> x[1] -> y[1] -> x[2] -> y[2]
             }
 
-            Circumference = countCircumference(x, y);
-            Console.WriteLine("Circumference = {0} \n",Math.Round(Circumference,3));//Math.round(V,a) will set showing a digits after comma of V
+            Perimeter = calPerimeter(x, y);
+            Console.WriteLine("Circumference = {0} \n", Math.Round(Perimeter, 3));//Math.round(V,a) will set showing a digits after comma of V
 
-            Square = countSquare(x, y);
-            Console.WriteLine("Square = {0} \n", Math.Round(Square, 3));
+            Area = calArea(x, y);
+            Console.WriteLine("Square = {0} \n", Math.Round(Area, 3));
 
             x = null;
             y = null;
