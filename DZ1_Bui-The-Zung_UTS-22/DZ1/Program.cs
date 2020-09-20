@@ -99,6 +99,7 @@ namespace DZ1
         //  +)Declare Arrays x[3] and y[3] for storing DATA of (x1,y1); (x2,y2); (x3,y3) Which were entered from User's Keyboard          
         //  +)Declare Perimeter, Area follow requierments
         //  +)Call Functions showText() and inputData() to enter from keyboard
+        //  +)If the data was entered do not form a triangle, system will command re-enter data again
         //  +)Call functions calPerimeter() and calArea() for take result after counting of these functions and show on screen
         //  +)Clear the memories of 2 arrays x[3] and y[3] before finishing of program
         //  +)Pause the Console app in 1 minute when user run in .exe file 
@@ -108,6 +109,7 @@ namespace DZ1
             double[] x = new double[3];
             double[] y = new double[3];
             double Perimeter, Area;
+            input:
             for (int i = 0; i < 6; i++)
             {
                 showText(i);
@@ -125,18 +127,26 @@ namespace DZ1
             }
 
             Perimeter = calPerimeter(x, y);
-            Console.WriteLine("Circumference = {0} \n", Math.Round(Perimeter, 3));//Math.round(V,a) will set showing a digits after comma of V
-
             Area = calArea(x, y);
+
+            //Check the data, Area of the Triangle is 0, that means data do not form a triangle, they form a line. System will return and command re-enter data
+            if (Area == 0)
+            {
+                Console.WriteLine("Sorry, The points you have just entered do not form a triangle, they form a line. Please re-enter the data :\n");
+                goto input;
+            }
+
+            Console.WriteLine("Circumference = {0} \n", Math.Round(Perimeter, 3));//Math.round(V,a) will set showing a digits after comma of V
             Console.WriteLine("Square = {0} \n", Math.Round(Area, 3));
 
             x = null;
             y = null;
             GC.Collect();
+            Console.ReadKey();
 
             //Pause the console app in 1 minute
-            Console.WriteLine("Pausing 1 Minute");
-            System.Threading.Thread.Sleep(60000);
+            //Console.WriteLine("Pausing 1 Minute");
+            //System.Threading.Thread.Sleep(60000);
         }
     }
 }
